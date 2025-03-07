@@ -40,6 +40,13 @@ git clone https://github.com/rayourama/Sudoku-GO.git
 ## Lancement de l'application :
 - Il ne vous reste plus qu'à lancer le fichier exécutable qui a été généré
 
+## Raccourci Bureau : 
+Exécutez les commandes suivantes : 
+```python
+cd details
+python3 script.py
+```
+
 ## Crédits 
 - [Ebiten](https://github.com/hajimehoshi/ebiten) - Pour la création de l'interface graphique.
 - [Go Image](https://pkg.go.dev/golang.org/x/image) - Pour la gestion des images et des polices de caractères.
