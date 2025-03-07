@@ -1,0 +1,50 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: windows-latest 
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.23.5  
+
+      - name: Build executable
+        run: go build -o ./sudoku.exe main.go 
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sudoku-exe
+          path: sudoku.exe
+
+  release:
+    needs: build  # Attend la fin du build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download executable
+        uses: actions/download-artifact@v4
+        with:
+          name: sudoku-exe
+          path: .
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: sudoku.exe
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
