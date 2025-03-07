@@ -31,32 +31,12 @@ L'objectif est de remplir toute la grille en respectant les règles énoncées c
 - **Procédez par élimination** : Si une case ne peut pas être remplie avec certains chiffres en raison des règles, éliminez ces chiffres comme options pour cette case.
 - **Vérifier souvent** : Assurez-vous que vos réponses respectent toujours les règles du Sudoku à chaque étape.
 ---
-## Prérequis
-
-Avant de pouvoir utilisez ce projet, veillez à bien installer tout les prérequis.
-
-### Prérequis pour éxécuter l'application
-
-1. **Installer Go** : 
-    - Vous devez installer [GO (Golang)](https://golang.org/dl/). Assurez-vous que la version installée est **1.23.5** ou une version plus récente.
-
-2. **Dépendances du projet** :
-    - Ce projet utilise une bibliothèque spécifique pour la gestion de l'interface graphique.
-
-    En clonant le projet, vous serez amené à installer divers modules et dépendances.
-
 ## Installation
-### 1. Cloner le dépot, installer les dépendances & compiler (si nécessaire)
+### Cloner le dépot
 
 ```bash
 git clone https://github.com/rayourama/Sudoku-GO.git
-cd Sudoku-GO/details
-go mod tidy
-go build -o ../sudoku.exe main.go
-
 ```
-> ⚠️ **Remarque importante** : Assurez-vous d'avoir installé Go avant de tenter de compiler le projet. Si vous avez des erreurs, veuillez également vérifier que Go soit correctement configuré dans les variables d'environnement.
-
 ## Lancement de l'application :
 - Il ne vous reste plus qu'à lancer le fichier exécutable qui a été généré
 
