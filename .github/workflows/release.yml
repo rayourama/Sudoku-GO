@@ -1,50 +1,46 @@
-name: Build and Release
+name: Build Windows EXE
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
-    runs-on: windows-latest 
-
+    runs-on: windows-latest
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.23.5  
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.23.5'
 
-      - name: Build executable
-        run: go build -o ./sudoku.exe main.go 
+    - name: Cache Go modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/go-build
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.mod') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: sudoku-exe
-          path: sudoku.exe
+    - name: Install dependencies
+      run: |
+        cd details
+        go mod tidy
 
-  release:
-    needs: build  # Attend la fin du build
-    runs-on: ubuntu-latest
+    - name: Build EXE
+      run: |
+        cd details
+        go build -o ./sudoku.exe main.go
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download executable
-        uses: actions/download-artifact@v4
-        with:
-          name: sudoku-exe
-          path: .
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: sudoku.exe
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload EXE as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: sudoku-exe
+        path: details/sudoku.exe
